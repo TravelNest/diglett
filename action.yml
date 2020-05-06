@@ -26,4 +26,4 @@ runs:
     - ${{ inputs.owner }}
     - ${{ inputs.repo }}
     - ${{ inputs.pr }}
-    - ${{ imputs.max_commits}}
+    - ${{ imputs.max_commits }}
