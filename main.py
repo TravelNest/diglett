@@ -16,11 +16,9 @@ def main(argv):
         opts, args = getopt(argv, "u:t:o:r:n:h", ["username=", "token=", "owner=" "repo_name=", "pr_number=", "help"])
     except GetoptError:
         print(f"::set-output name=OutputMessage::Got error: {opts}, {args}")
+        sys.exit(1)
 
     username, token, owner, repo_name, pr_number, max_commits, max_days = None, None, None, None, None, 50, 100
-
-    print(f"::set-output name=OutputMessage::Got error: {opts}, {args}")
-    return None
 
     for opt, arg in opts:
         if opt in ('-h', '--help'):
@@ -35,7 +33,7 @@ def main(argv):
                 f'-c, --max_commits  Threshold for max. number of commits accepted \n'
                 f'-h                 Help\n'
             )
-            sys.exit()
+            sys.exit(0)
         elif opt in ("-u", "--username"):
             username = arg
         elif opt in ("-t", "--token"):
@@ -87,5 +85,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    print(f"::set-output name=OutputMessage::lorem ipsum")
-    #main(sys.argv[1:])
+    main(sys.argv[1:])
