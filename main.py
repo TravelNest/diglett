@@ -1,4 +1,5 @@
 import sys
+import os
 import logging
 from getopt import getopt, GetoptError
 from diglett import (
@@ -50,7 +51,7 @@ def main(argv):
 
     if not username or not token or not owner or not repo_name or not pr_number:
         # All parameters are required
-        logging.error(f'Some of the required parameter is missing: {opts}, {args}')
+        logging.error(f'Some of the required parameter is missing: {opts}, {args}, {os.environ}')
         print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {opts}, {args}")
         sys.exit(1)
 
