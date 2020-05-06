@@ -28,7 +28,7 @@ def main(argv):
     max_days = 50
     username = vars['INPUT_USERNAME']
     token = vars['INPUT_TOKEN']
-    pr_number = vars['INPUT_TOKEN']
+    pr_number = vars['INPUT_PR_NUMBER']
 
     session = make_session(username, token)
 
