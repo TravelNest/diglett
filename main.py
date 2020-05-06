@@ -1,7 +1,6 @@
 import sys
 import os
 import logging
-from getopt import getopt, GetoptError
 from diglett import (
     make_session,
     get_readme_last_modified,
@@ -14,46 +13,22 @@ from diglett import (
 
 
 def main(argv):
-    try:
-        opts, args = getopt(argv, "u:t:o:r:n:h", ["username=", "token=", "owner=" "repo_name=", "pr_number=", "help"])
-    except GetoptError:
-        print(f"::set-output name=OutputMessage::Got error: {opts}, {args}")
-        sys.exit(1)
+    vars = os.environ
+    required_vars = ['INPUT_USERNAME', 'INPUT_PR_NUMBER', 'INPUT_TOKEN']
 
-    username, token, owner, repo_name, pr_number, max_commits, max_days = None, None, None, None, None, 50, 100
-
-    for opt, arg in opts:
-        if opt in ('-h', '--help'):
-            print(f'::set-output name=OutputMessage::'
-                  f'usage: python main.py [-u username | -t token | -r repo_name | -n pr_number | -h] \n'
-                  f'Options and arguments: \n'
-                  f'-u, --username     Username to login GitHub API \n'
-                  f'-t, --token        Token corresponding to --username to login GitHub API \n'
-                  f'-o, --owner        Repository owner or organization \n'
-                  f'-r, --repo_name    GitHub repository name \n'
-                  f'-n, --pr_number    Pull Request number \n'
-                  f'-c, --max_commits  Threshold for max. number of commits accepted \n'
-                  f'-h                 Help\n'
-            )
-            sys.exit(0)
-        elif opt in ("-u", "--username"):
-            username = arg
-        elif opt in ("-t", "--token"):
-            token = arg
-        elif opt in ("-o", "--owner"):
-            owner = arg
-        elif opt in ("-r", "--repo_name"):
-            repo_name = arg
-        elif opt in ("-c", "--max_commits"):
-            max_commits = arg
-        elif opt in ("-n", "--pr_number"):
-            pr_number = arg
-
-    if not username or not token or not owner or not repo_name or not pr_number:
+    if all(v in required_vars and vars[v] for v in vars):
         # All parameters are required
-        logging.error(f'Some of the required parameter is missing: {opts}, {args}, {os.environ}')
-        print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {opts}, {args}")
+        logging.error(f'Some of the required parameter is missing: {vars}')
+        print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {vars}")
         sys.exit(1)
+
+    owner = vars['GITHUB_REPOSITORY_OWNER']
+    repo_name = vars['GITHUB_REPOSITORY'].split('/', 1)[1]
+    max_commits = vars.get('INPUT_MAX_COMMITS', 100)
+    max_days = 50
+    username = vars['INPUT_USERNAME']
+    token = vars['INPUT_TOKEN']
+    pr_number = vars['INPUT_TOKEN']
 
     session = make_session(username, token)
 
