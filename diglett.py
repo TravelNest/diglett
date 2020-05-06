@@ -19,7 +19,6 @@ def make_session(user=None, token=None):
     try:
         r.raise_for_status()
     except Exception:
-        logging.error(f'{user} {token}')
         logging.error(r.json())
         raise
 

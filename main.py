@@ -1,4 +1,5 @@
 import sys
+import logging
 from getopt import getopt, GetoptError
 from diglett import (
     make_session,
@@ -49,7 +50,9 @@ def main(argv):
 
     if not username or not token or not owner or not repo_name or not pr_number:
         # All parameters are required
+        logging.error(f'Some of the required parameter is missing: {opts}, {args}')
         print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {opts}, {args}")
+        sys.exit(1)
 
     session = make_session(username, token)
 
@@ -77,6 +80,7 @@ def main(argv):
         f':memo: Update your `README.md` to prevent it being outdated! \n' \
 
     print(f"::set-output name=OutputMessage::{message}")
+    logging.info(message)
 
     if not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
         add_comment(owner, repo_name, pr_number, message, s=session)
