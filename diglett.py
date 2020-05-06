@@ -155,6 +155,7 @@ def check_if_comment_already_exists(owner, repo, pr, body, s):
     r = s.get(f'https://api.github.com/repos/{owner}/{repo}/pulls/{pr}/reviews')
     parsed_r = r.json()
     logging.info(parsed_r)
+    return True
 
     for review in parsed_r:
         pre_text = review.get('body')
