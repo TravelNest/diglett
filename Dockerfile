@@ -1,6 +1,6 @@
-FROM alpine:3.10
+FROM python:3-slim AS builder
 
-COPY entrypoint.sh /entrypoint.sh
+#COPY entrypoint.sh /entrypoint.sh
 COPY main.py /main.py
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["python", "/main.py"]

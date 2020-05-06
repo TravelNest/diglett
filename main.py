@@ -76,7 +76,7 @@ def main(argv):
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
         f':memo: Update your `README.md` to prevent it being outdated! \n' \
 
-    print(message)
+    print(f"::set-output name=message::{message}")
 
     if not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
         add_comment(owner, repo_name, pr_number, message, s=session)

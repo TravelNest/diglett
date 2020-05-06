@@ -11,12 +11,18 @@ inputs:
   repo:
     description: 'Repo name'
     required: true
-  pr:  # id of input
-    description: 'GitHub account to access API'
+  pr_number:
+    description: 'Pull request number / ID'
+    required: true
+  owner:
+    description: 'Owner of the repo'
+    required: true
+  max_commits:
+    description: 'Max number of commits'
     required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  message:
+    description: "Output from the action"
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -24,6 +30,6 @@ runs:
     - ${{ inputs.username }}
     - ${{ inputs.token }}
     - ${{ inputs.repo }}
-    - ${{ inputs.pr }}
+    - ${{ inputs.pr_number }}
     - ${{ inputs.owner }}
     - ${{ inputs.max_commits }}
