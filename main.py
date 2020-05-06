@@ -11,10 +11,10 @@ from diglett import (
     check_if_comment_already_exists
 )
 
+# TODO: pr_number can be parsed from vars['GITHUB_REF'] = 'refs/pull/3/merge'
 
 def main():
     vars = os.environ
-    logging.error(vars)
     required_vars = ['INPUT_USERNAME', 'INPUT_PR_NUMBER', 'INPUT_TOKEN']
 
     if all(v in required_vars and vars[v] for v in vars):
