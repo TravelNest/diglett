@@ -41,6 +41,8 @@ def main(argv):
     is_author_still_member = author in logins
     is_outdated = max_days < time_delta
 
+    is_repo_outdated = (is_outdated and is_author_still_member and is_over_threshold)
+
     author_emoji = 'white_check_mark' if is_author_still_member else 'heavy_exclamation_mark'
     commits_emoji = 'heavy_exclamation_mark' if is_over_threshold else 'white_check_mark'
     date_emoji = 'heavy_exclamation_mark' if is_outdated else 'white_check_mark'
@@ -55,7 +57,7 @@ def main(argv):
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
         f':memo: Update your `README.md` to prevent it being outdated! \n' \
 
-    print(f"::set-output name=OutputMessage::{message}")
+    print(f"::set-output name=OutputMessage:: Is repo outdated? {is_repo_outdated}")
     logging.info(message)
 
     if not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
