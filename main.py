@@ -87,4 +87,5 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    print(f"::set-output name=OutputMessage::lorem ipsum")
+    #main(sys.argv[1:])
