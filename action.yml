@@ -1,13 +1,27 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+# action.yml
+name: 'Diglett'
+description: 'Dig for your documentation outdateness'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  username:
+    description: 'GitHub account to access API'
     required: true
-    default: 'World'
+  token:
+    description: 'GitHub token to access API'
+    required: true
+  repo:
+    description: 'Repo name'
+    required: true
+  pr:  # id of input
+    description: 'GitHub account to access API'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.username }}
+    - ${{ inputs.token }}
+    - ${{ inputs.repo }}
+    - ${{ inputs.pr }}
