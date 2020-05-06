@@ -8,14 +8,8 @@ inputs:
   token:
     description: 'GitHub token to access API'
     required: true
-  repo:
-    description: 'Repo name'
-    required: true
   pr_number:
     description: 'Pull request number / ID'
-    required: true
-  owner:
-    description: 'Owner of the repo'
     required: true
   max_commits:
     description: 'Max number of commits'

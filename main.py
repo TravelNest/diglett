@@ -51,7 +51,7 @@ def main(argv):
 
     message = f'![diglett](https://raw.githubusercontent.com/TravelNest/diglett/master/diglett.gif) \n'\
         f'Hello hello, \n' \
-        f'I am Diglett and I dig for your documentation outdatedness! \n \n' \
+        f'I am Diglett and I dig in your documentation! \n \n' \
         f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
         f':{date_emoji}: :date: `README.md` was last modified: {last_modified} \n' \
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
