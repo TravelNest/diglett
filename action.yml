@@ -26,10 +26,3 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.username }}
-    - ${{ inputs.token }}
-    - ${{ inputs.repo_name }}
-    - ${{ inputs.pr_number }}
-    - ${{ inputs.owner }}
-    - ${{ inputs.max_commits }}
