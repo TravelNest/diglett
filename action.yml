@@ -21,7 +21,7 @@ inputs:
     description: 'Max number of commits'
     required: true
 outputs:
-  message:
+  OutputMessage:
     description: "Output from the action"
 runs:
   using: 'docker'

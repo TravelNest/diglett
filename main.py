@@ -15,7 +15,8 @@ def main(argv):
     try:
         opts, args = getopt(argv, "u:t:o:r:n:h", ["username=", "token=", "owner=" "repo_name=", "pr_number=", "help"])
     except GetoptError:
-        print(f'Got error: {opts}, {args}')
+        print(f"::set-output name=OutputMessage::Got error: {opts}, {args}")
+
         sys.exit(2)
 
     username, token, owner, repo_name, pr_number, max_commits, max_days = None, None, None, None, None, 50, 100
@@ -49,6 +50,7 @@ def main(argv):
 
     if not username or not token or not owner or not repo_name or not pr_number:
         # All parameters are required
+        print(f"::set-output name=OutputMessage:: Some of the required paramenter is missing: {opts}, {args}")
         sys.exit(1)
 
     session = make_session(username, token)
@@ -76,7 +78,7 @@ def main(argv):
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
         f':memo: Update your `README.md` to prevent it being outdated! \n' \
 
-    print(f"::set-output name=message::{message}")
+    print(f"::set-output name=OutputMessage::{message}")
 
     if not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
         add_comment(owner, repo_name, pr_number, message, s=session)
