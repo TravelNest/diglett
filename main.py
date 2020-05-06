@@ -49,7 +49,7 @@ def main(argv):
 
     author_suffix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
 
-    message = f'![diglett](https://github.com/TravelNest/diglett/blob/master/diglett.gif) \n'\
+    message = f'![diglett](https://raw.githubusercontent.com/TravelNest/diglett/master/diglett.gif) \n'\
         f'Hello hello, \n' \
         f'I am Diglett and I dig for your documentation outdatedness! \n \n' \
         f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
