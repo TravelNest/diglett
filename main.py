@@ -12,8 +12,9 @@ from diglett import (
 )
 
 
-def main(argv):
+def main():
     vars = os.environ
+    logging.info(vars)
     required_vars = ['INPUT_USERNAME', 'INPUT_PR_NUMBER', 'INPUT_TOKEN']
 
     if all(v in required_vars and vars[v] for v in vars):
@@ -41,7 +42,7 @@ def main(argv):
     is_author_still_member = author in logins
     is_outdated = max_days < time_delta
 
-    is_repo_outdated = (is_outdated and is_author_still_member and is_over_threshold)
+    is_repo_outdated = not (is_outdated and is_author_still_member and is_over_threshold)
 
     author_emoji = 'white_check_mark' if is_author_still_member else 'heavy_exclamation_mark'
     commits_emoji = 'heavy_exclamation_mark' if is_over_threshold else 'white_check_mark'
@@ -60,11 +61,11 @@ def main(argv):
     print(f"::set-output name=OutputMessage:: Is repo outdated? {is_repo_outdated}")
     logging.info(message)
 
-    if not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
+    if is_repo_outdated and not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
         add_comment(owner, repo_name, pr_number, message, s=session)
 
     sys.exit(0)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
