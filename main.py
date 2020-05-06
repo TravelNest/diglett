@@ -37,7 +37,7 @@ def main(argv):
     num_commits = total_count_commits(last_modified, owner, repo_name, s=session)
     time_delta = timedelta_last_modified(last_modified)
 
-    is_over_threshold = max_commits < num_commits
+    is_over_threshold = int(max_commits) < num_commits
     is_author_still_member = author in logins
     is_outdated = max_days < time_delta
 
