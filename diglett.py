@@ -156,6 +156,7 @@ def check_if_comment_already_exists(owner, repo, pr, body, s):
     parsed_r = r.json()
 
     for review in parsed_r:
+        logging.error(review)
         pre_text = review.get('body')
         pre_text = pre_text[:10] if len(pre_text) > 10 else pre_text
 
