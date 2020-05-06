@@ -10,7 +10,7 @@ def _chained_get(dict_, *nested_keys):
         dict_ = dict_.get(key, {})
     return dict_
 
-# TODO: fix user and token in other cases
+
 def make_session(user=None, token=None):
     s = requests.Session()
     s.auth = (user, token)
@@ -25,15 +25,12 @@ def make_session(user=None, token=None):
     return s
 
 
-def _get_repo_stats(owner, repo, s=None):
-    s = s or make_session()
-
+def _get_repo_stats(owner, repo, s):
     response = s.get(f'https://api.github.com/repos/{owner}/{repo}/stats/commit_activity')
     return response.json()
 
 
-def get_readme_last_modified(owner, repo, s=None, path=None):
-    s = s or make_session()
+def get_readme_last_modified(owner, repo, s, path=None):
     path = path or 'README.md'
 
     response = s.get(f'https://api.github.com/repos/{owner}/{repo}/commits?path={path}&page=1&per_page=1')
@@ -60,8 +57,7 @@ def _convert_date_to_start_of_week(last_modified):
     return round(start_of_week.timestamp())
 
 
-def total_count_commits(last_modified, owner, repo, s=None):
-    s = s or make_session()
+def total_count_commits(last_modified, owner, repo, s):
     repo_stats = _get_repo_stats(owner, repo, s)
     start_of_week = _convert_date_to_start_of_week(last_modified)
 
@@ -73,7 +69,7 @@ def total_count_commits(last_modified, owner, repo, s=None):
     return total
 
 
-def get_number_of_pages_repo_list(owner, s=None, per_page=None, page=None):
+def get_number_of_pages_repo_list(owner, s, per_page=None, page=None):
     per_page = per_page or 50
     page = page or 1
 
@@ -89,9 +85,7 @@ def get_number_of_pages_repo_list(owner, s=None, per_page=None, page=None):
     return int(total_pages)
 
 
-def get_repos(owner, s=None, per_page=None, page=None):
-    s = s or make_session()
-
+def get_repos(owner, s, per_page=None, page=None):
     per_page = per_page or 50
     page = page or 1
 
@@ -116,26 +110,20 @@ def get_repos(owner, s=None, per_page=None, page=None):
     return repos_dict
 
 
-def get_organization_user_logins(owner, s=None):
-    s = s or make_session()
-
+def get_organization_user_logins(owner, s):
     r = s.get(f'https://api.github.com/orgs/{owner}/members')
 
     return [user['login'] for user in r.json()]
 
 
-def get_user_name(login, s=None):
-    s = s or make_session()
-
+def get_user_name(login, s):
     r = s.get(f'https://api.github.com/users/{login}')
     parsed = r.json()
 
     return parsed.get('name')
 
 
-def get_organization_usernames(owner, s=None):
-    s = s or make_session()
-
+def get_organization_usernames(owner, s):
     logins = get_organization_user_logins(owner, s=s)
     usernames = []
 
@@ -146,9 +134,7 @@ def get_organization_usernames(owner, s=None):
     return usernames
 
 
-def add_comment(owner, repo, pr, body, s=None):
-    s = s or make_session()
-
+def add_comment(owner, repo, pr, body, s):
     data = json.dumps({
         "body": body,
         "event": "COMMENT"
@@ -163,3 +149,15 @@ def add_comment(owner, repo, pr, body, s=None):
     parsed_r = r.json()
 
     return parsed_r.get('id', None)
+
+
+def check_if_comment_already_exists(owner, repo, pr, body, s):
+    r = s.get(f'https://api.github.com/repos/{owner}/{repo}/pulls/{pr}/reviews')
+    parsed_r = r.json()
+
+    for review in parsed_r:
+        if review['body'][:10] == body[:10]:
+            return True
+
+    return False
+

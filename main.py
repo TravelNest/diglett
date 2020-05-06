@@ -6,7 +6,8 @@ from diglett import (
     total_count_commits,
     timedelta_last_modified,
     add_comment,
-    get_organization_user_logins
+    get_organization_user_logins,
+    check_if_comment_already_exists
 )
 
 
@@ -67,14 +68,20 @@ def main(argv):
 
     author_sufix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
 
-    message = f'Hello hello, I am Diglett and I dig for your documentation outdateness! \n \n' \
+    message = f'![diglett](https://github.com/TravelNest/diglett/blob/master/diglett.gif) \n'\
+        f'Hello hello, \n' \
+        f'I am Diglett and I dig for your documentation outdateness! \n \n' \
         f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_sufix}. \n' \
         f':{date_emoji}: :date: `README.md` was last modified: {last_modified} \n' \
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
         f':memo: Update your `README.md` to prevent it being outdated! \n' \
 
     print(message)
-    add_comment(owner, repo_name, pr_number, message, s=session)
+
+    if not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
+        add_comment(owner, repo_name, pr_number, message, s=session)
+
+    sys.exit(0)
 
 
 if __name__ == "__main__":
