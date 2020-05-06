@@ -17,13 +17,11 @@ def main(argv):
     except GetoptError:
         print(f"::set-output name=OutputMessage::Got error: {opts}, {args}")
 
-        sys.exit(2)
-
     username, token, owner, repo_name, pr_number, max_commits, max_days = None, None, None, None, None, 50, 100
 
     for opt, arg in opts:
         if opt in ('-h', '--help'):
-            print(
+            print(f'::set-output name=OutputMessage::'
                 f'usage: python main.py [-u username | -t token | -r repo_name | -n pr_number | -h] \n'
                 f'Options and arguments: \n'
                 f'-u, --username     Username to login GitHub API \n'
@@ -51,7 +49,6 @@ def main(argv):
     if not username or not token or not owner or not repo_name or not pr_number:
         # All parameters are required
         print(f"::set-output name=OutputMessage:: Some of the required paramenter is missing: {opts}, {args}")
-        sys.exit(1)
 
     session = make_session(username, token)
 
