@@ -19,6 +19,8 @@ def main(argv):
 
     username, token, owner, repo_name, pr_number, max_commits, max_days = None, None, None, None, None, 50, 100
 
+    print(f"::set-output name=OutputMessage::Got error: {opts}, {args}")
+
     for opt, arg in opts:
         if opt in ('-h', '--help'):
             print(f'::set-output name=OutputMessage::'
