@@ -23,15 +23,15 @@ def main(argv):
     for opt, arg in opts:
         if opt in ('-h', '--help'):
             print(f'::set-output name=OutputMessage::'
-                f'usage: python main.py [-u username | -t token | -r repo_name | -n pr_number | -h] \n'
-                f'Options and arguments: \n'
-                f'-u, --username     Username to login GitHub API \n'
-                f'-t, --token        Token corresponding to --username to login GitHub API \n'
-                f'-o, --owner        Repository owner or organization \n'
-                f'-r, --repo_name    GitHub repository name \n'
-                f'-n, --pr_number    Pull Request number \n'
-                f'-c, --max_commits  Threshold for max. number of commits accepted \n'
-                f'-h                 Help\n'
+                  f'usage: python main.py [-u username | -t token | -r repo_name | -n pr_number | -h] \n'
+                  f'Options and arguments: \n'
+                  f'-u, --username     Username to login GitHub API \n'
+                  f'-t, --token        Token corresponding to --username to login GitHub API \n'
+                  f'-o, --owner        Repository owner or organization \n'
+                  f'-r, --repo_name    GitHub repository name \n'
+                  f'-n, --pr_number    Pull Request number \n'
+                  f'-c, --max_commits  Threshold for max. number of commits accepted \n'
+                  f'-h                 Help\n'
             )
             sys.exit(0)
         elif opt in ("-u", "--username"):
@@ -49,7 +49,7 @@ def main(argv):
 
     if not username or not token or not owner or not repo_name or not pr_number:
         # All parameters are required
-        print(f"::set-output name=OutputMessage:: Some of the required paramenter is missing: {opts}, {args}")
+        print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {opts}, {args}")
 
     session = make_session(username, token)
 
@@ -66,12 +66,12 @@ def main(argv):
     commits_emoji = 'heavy_exclamation_mark' if is_over_threshold else 'white_check_mark'
     date_emoji = 'heavy_exclamation_mark' if is_outdated else 'white_check_mark'
 
-    author_sufix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
+    author_suffix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
 
     message = f'![diglett](https://github.com/TravelNest/diglett/blob/master/diglett.gif) \n'\
         f'Hello hello, \n' \
-        f'I am Diglett and I dig for your documentation outdateness! \n \n' \
-        f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_sufix}. \n' \
+        f'I am Diglett and I dig for your documentation outdatedness! \n \n' \
+        f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
         f':{date_emoji}: :date: `README.md` was last modified: {last_modified} \n' \
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
         f':memo: Update your `README.md` to prevent it being outdated! \n' \

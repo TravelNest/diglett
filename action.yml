@@ -1,6 +1,6 @@
 # action.yml
 name: 'Diglett'
-description: 'Dig for your documentation outdateness'
+description: 'Dig for your documentation outdatedness'
 inputs:
   username:
     description: 'GitHub account to access API'
@@ -19,7 +19,7 @@ inputs:
     required: true
   max_commits:
     description: 'Max number of commits'
-    required: true
+    required: false
 outputs:
   OutputMessage:
     description: "Output from the action"
