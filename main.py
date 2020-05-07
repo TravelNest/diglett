@@ -20,8 +20,8 @@ def main():
 
     if all(v in required_vars and vars[v] for v in vars):
         # All parameters are required
-        logging.error(f'Some of the required parameter is missing: {vars}')
-        print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {vars}")
+        logging.error(f'Some of the required parameters is missing: {vars}')
+        print(f"::set-output name=OutputMessage:: Some of the required parameters is missing: {vars}")
         sys.exit(1)
 
     owner = vars['GITHUB_REPOSITORY_OWNER']
