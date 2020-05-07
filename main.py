@@ -8,7 +8,8 @@ from diglett import (
     timedelta_last_modified,
     add_comment,
     get_organization_user_logins,
-    check_if_comment_already_exists
+    check_if_comment_already_exists,
+    datetime_readable
 )
 
 
@@ -60,7 +61,7 @@ def main():
         f'Hello hello, \n' \
         f'I am Diglett and I dig in your documentation! \n \n' \
         f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
-        f':{date_emoji}: :date: `README.md` was last modified: {last_modified} \n' \
+        f':{date_emoji}: :date: `README.md` was last modified: {datetime_readable(last_modified)} \n' \
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** were pushed \n\n' \
         f':memo: {outdated_suffix} \n' \
 
