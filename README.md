@@ -1,5 +1,5 @@
 # Diglett 
-A Pokémon which dig for repository documentation and detect _potentially_ outdated `README.md`. Diglett is a GitHub action and it checks:
+A Pokémon which digs in repository documentation and detect _potentially_ outdated `README.md`. Diglett is a GitHub action and it checks:
  - When `README.md` was last modified.
  - Who did the last update and wheather the person is still member of the organization.  
  - Number of commits pushed since the `README.md` was last modified. 
