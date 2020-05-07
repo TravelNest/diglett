@@ -44,13 +44,13 @@ def main():
 
     is_over_threshold = int(max_commits) < num_commits
     is_author_still_member = author in logins
-    is_outdated = max_days < time_delta
+    is_outdated = max_days > time_delta
 
-    is_repo_outdated = (is_outdated or is_author_still_member or is_over_threshold)
+    is_repo_outdated = (is_outdated or not is_author_still_member or is_over_threshold)
 
     author_emoji = 'white_check_mark' if is_author_still_member else 'heavy_exclamation_mark'
     commits_emoji = 'heavy_exclamation_mark' if is_over_threshold else 'white_check_mark'
-    date_emoji = 'heavy_exclamation_mark' if is_outdated else 'white_check_mark'
+    date_emoji = 'white_check_mark' if is_outdated else 'heavy_exclamation_mark'
 
     author_suffix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
     outdated_suffix = f'Your repo documentation is outdated' if is_repo_outdated else \
