@@ -4,7 +4,7 @@ A Pokémon which dig for repository documentation and detect _potentially_ outda
  - Who did the last update and wheather the person is still member of the organization.  
  - Number of commits pushed since the `README.md` was last modified. 
 
-Print a short summary in the pull request reviews:
+Prints a short summary in the pull request review:
 > ![diglett](https://raw.githubusercontent.com/TravelNest/diglett/master/diglett.gif)   
 > Hello hello,  
 > I am Diglett and I dig in your documentation! 
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Diglett
     steps:
-    - name: Diglett README check
+    - name: Diglett documentation check
       id: diglett
       uses: TravelNest/diglett@master
       with:
