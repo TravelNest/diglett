@@ -44,6 +44,10 @@ def get_readme_last_modified(owner, repo, s, path=None):
     return last_modified, author
 
 
+def datetime_readable(datetime_github_format):
+    return datetime.strptime(datetime_github_format, "%Y-%m-%dT%H:%M:%SZ").strftime("%d %B %Y %H:%M")
+
+
 def timedelta_last_modified(last_modified):
     converted = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ")
     return round((datetime.now() - converted).days)
@@ -163,4 +167,3 @@ def check_if_comment_already_exists(owner, repo, pr, s):
             return True
 
     return False
-

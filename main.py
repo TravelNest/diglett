@@ -8,28 +8,29 @@ from diglett import (
     timedelta_last_modified,
     add_comment,
     get_organization_user_logins,
-    check_if_comment_already_exists
+    check_if_comment_already_exists,
+    datetime_readable
 )
 
 
 # TODO: pr_number can be parsed from vars['GITHUB_REF'] = 'refs/pull/3/merge'
 def main():
-    vars = os.environ
+    env_vars = os.environ
     required_vars = ['INPUT_USERNAME', 'INPUT_PR_NUMBER', 'INPUT_TOKEN']
 
-    if all(v in required_vars and vars[v] for v in vars):
+    if all(v in required_vars and env_vars[v] for v in env_vars):
         # All parameters are required
-        logging.error(f'Some of the required parameter is missing: {vars}')
-        print(f"::set-output name=OutputMessage:: Some of the required parameter is missing: {vars}")
+        logging.error(f'Some of the required parameters is missing: {env_vars}')
+        print(f"::set-output name=OutputMessage:: Some of the required parameters is missing: {env_vars}")
         sys.exit(1)
 
-    owner = vars['GITHUB_REPOSITORY_OWNER']
-    repo_name = vars['GITHUB_REPOSITORY'].split('/', 1)[1]
-    max_commits = vars.get('INPUT_MAX_COMMITS', 100)
+    owner = env_vars['GITHUB_REPOSITORY_OWNER']
+    repo_name = env_vars['GITHUB_REPOSITORY'].split('/', 1)[1]
+    max_commits = env_vars.get('INPUT_MAX_COMMITS', 100)
     max_days = 50
-    username = vars['INPUT_USERNAME']
-    token = vars['INPUT_TOKEN']
-    pr_number = vars['INPUT_PR_NUMBER']
+    username = env_vars['INPUT_USERNAME']
+    token = env_vars['INPUT_TOKEN']
+    pr_number = env_vars['INPUT_PR_NUMBER']
 
     session = make_session(username, token)
 
@@ -60,7 +61,7 @@ def main():
         f'Hello hello, \n' \
         f'I am Diglett and I dig in your documentation! \n \n' \
         f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
-        f':{date_emoji}: :date: `README.md` was last modified: {last_modified} \n' \
+        f':{date_emoji}: :date: `README.md` was last modified: {datetime_readable(last_modified)} \n' \
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** were pushed \n\n' \
         f':memo: {outdated_suffix} \n' \
 

@@ -1,0 +1,17 @@
+on: pull_request
+
+jobs:
+  digglet:
+    runs-on: ubuntu-latest
+    name: Diglett
+    steps:
+    - name: Diglett documentation check
+      id: diglett
+      uses: TravelNest/diglett@master
+      with:
+        username: ${{ secrets.username }}
+        token: ${{ secrets.token }}
+        pr_number: ${{ github.event.pull_request.number }}
+        max_commits: 100
+    - name: Diglett result
+      run: echo ${{ steps.diglett.outputs.OutputMessage }}
