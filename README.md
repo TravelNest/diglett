@@ -11,7 +11,7 @@ Prints a short summary in the pull request review:
 >
 >:white_check_mark: :bust_in_silhouette: **GitHubUser** last modified the `README.md`, who is still member of GitHub org.  
 :white_check_mark: :date: `README.md` was last modified: 2019-04-14T19:55:36Z   
-:white_check_mark: :hash: Since then **5 commits** where pushed   
+:white_check_mark: :hash: Since then **5 commits** were pushed   
 >
 >:memo: Update your `README.md` to prevent it being outdated! 
 
@@ -42,8 +42,8 @@ jobs:
 Add GitHub credentials `username` and `token` in your repo Secrets.
 
 ## TODO:
- - [] add tests
- - [] search for all README.md in repo
- - [] search for TODOs in code
- - [] add makefile with tests & lint
+ - add tests
+ - search for all README.md in repo
+ - search for TODOs in code
+ - add makefile with tests & lint
 
