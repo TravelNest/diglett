@@ -11,8 +11,8 @@ from diglett import (
     check_if_comment_already_exists
 )
 
-# TODO: pr_number can be parsed from vars['GITHUB_REF'] = 'refs/pull/3/merge'
 
+# TODO: pr_number can be parsed from vars['GITHUB_REF'] = 'refs/pull/3/merge'
 def main():
     vars = os.environ
     required_vars = ['INPUT_USERNAME', 'INPUT_PR_NUMBER', 'INPUT_TOKEN']
@@ -33,6 +33,10 @@ def main():
 
     session = make_session(username, token)
 
+    if check_if_comment_already_exists(owner, repo_name, pr_number, s=session):
+        print(f"::set-output name=OutputMessage:: Diglett already dug this pull request, digging away!")
+        sys.exit(0)
+
     logins = get_organization_user_logins(owner, s=session)
     last_modified, author = get_readme_last_modified(owner, repo_name, s=session)
     num_commits = total_count_commits(last_modified, owner, repo_name, s=session)
@@ -49,6 +53,8 @@ def main():
     date_emoji = 'heavy_exclamation_mark' if is_outdated else 'white_check_mark'
 
     author_suffix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
+    outdated_suffix = f'Your repo documentation is outdated' if is_repo_outdated else \
+        'Update your `README.md` to prevent it being outdated!'
 
     message = f'![diglett](https://raw.githubusercontent.com/TravelNest/diglett/master/diglett.gif) \n'\
         f'Hello hello, \n' \
@@ -56,13 +62,12 @@ def main():
         f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
         f':{date_emoji}: :date: `README.md` was last modified: {last_modified} \n' \
         f':{commits_emoji}: :hash: Since then **{num_commits} commits** where pushed \n\n' \
-        f':memo: Update your `README.md` to prevent it being outdated! \n' \
+        f':memo: {outdated_suffix} \n' \
 
     print(f"::set-output name=OutputMessage:: Is repo outdated? {is_repo_outdated}")
     logging.error(message)
 
-    if is_repo_outdated and not check_if_comment_already_exists(owner, repo_name, pr_number, message, s=session):
-        add_comment(owner, repo_name, pr_number, message, s=session)
+    add_comment(owner, repo_name, pr_number, message, s=session)
 
     sys.exit(0)
 
