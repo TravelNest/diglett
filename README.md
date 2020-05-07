@@ -39,6 +39,7 @@ jobs:
       run: echo ${{ steps.diglett.outputs.OutputMessage }} 
 ```
 
+Add GitHub credentials `username` and `token` in your repo Secrets.
 
 ## TODO:
  - [] add tests
