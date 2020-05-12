@@ -54,11 +54,11 @@ def timedelta_last_modified(last_modified):
 
 
 def _convert_date_to_start_of_week(last_modified):
-    # converted = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ")
+    converted = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ")
     # iso = converted.isocalendar()
     # start_of_week = datetime.strptime(f'{iso[0]} {iso[1] - 2} 0 0', '%Y %W %w %H')
 
-    return round(last_modified.timestamp())
+    return round(converted.timestamp())
 
 
 def total_count_commits(last_modified, owner, repo, s):
