@@ -2,17 +2,20 @@
 name: 'Diglett'
 description: 'Dig for your documentation outdatedness'
 inputs:
-  username:
+  USERNAME:
     description: 'GitHub account to access API'
     required: true
-  token:
+  TOKEN:
     description: 'GitHub token to access API'
     required: true
-  pr_number:
+  PR_NUMBER:
     description: 'Pull request number / ID'
     required: true
-  max_commits:
-    description: 'Max number of commits'
+  MAX_COMMITS:
+    description: 'Threshold for allowed number of commits since README.md last modified, if repo has more commits'
+    required: false
+  MAX_DAYS:
+    description: 'Threshold for allowed timedelta since README.md last modified, if repo has more commits'
     required: false
 outputs:
   OutputMessage:

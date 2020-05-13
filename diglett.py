@@ -25,9 +25,16 @@ def make_session(user=None, token=None):
     return s
 
 
-def _get_repo_stats(owner, repo, s):
+def get_repo_stats(owner, repo, s):
     response = s.get(f'https://api.github.com/repos/{owner}/{repo}/stats/commit_activity')
     return response.json()
+
+
+def get_repo_readme_paths(owner, repo, s):
+    response = s.get(f'https://api.github.com/search/code?q=+repo:{owner}/{repo}+filename:README.md')
+    parsed_response = response.json()
+    items = parsed_response.get('items', [])
+    return [i.get('path') for i in items]
 
 
 def get_readme_last_modified(owner, repo, s, path=None):
@@ -61,8 +68,10 @@ def _convert_date_to_start_of_week(last_modified):
     return round(converted.timestamp())
 
 
-def total_count_commits(last_modified, owner, repo, s):
-    repo_stats = _get_repo_stats(owner, repo, s)
+def total_count_commits_from_last_modified(repo_stats, last_modified=None):
+    if not last_modified:
+        return sum([rs.get('total', 0) for rs in repo_stats])
+
     start_of_week = _convert_date_to_start_of_week(last_modified)
 
     total = 0

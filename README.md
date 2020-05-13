@@ -31,10 +31,11 @@ jobs:
       id: diglett
       uses: TravelNest/diglett@master
       with:
-        username: ${{ secrets.username }}
-        token: ${{ secrets.token }}
-        pr_number: ${{ github.event.pull_request.number }}
-        max_commits: 100
+        USERNAME: ${{ secrets.username }}
+        TOKEN: ${{ secrets.token }}
+        PR_NUMBERS: ${{ github.event.pull_request.number }}
+        MAX_COMMITS: 100
+        MAX_DAYS: 50
     - name: Diglett result
       run: echo ${{ steps.diglett.outputs.OutputMessage }} 
 ```
