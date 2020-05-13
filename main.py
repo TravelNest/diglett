@@ -57,7 +57,7 @@ def main():
 
         is_over_max_commit_threshold = int(max_commits) < number_of_commits
         is_author_still_member = author in logins
-        is_over_max_days = max_days < time_delta
+        is_over_max_days = int(max_days) < time_delta
 
         is_rm_outdated.append(not (is_over_max_days or not is_author_still_member or is_over_max_commit_threshold))
 
