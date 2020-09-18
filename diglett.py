@@ -14,13 +14,13 @@ def _chained_get(dict_, *nested_keys):
 def make_session(token=None):
     s = requests.Session()
     s.headers.update({"authorization": f"Bearer {token}"})
-    r = s.get('https://api.github.com/user')
-
-    try:
-        r.raise_for_status()
-    except Exception:
-        logging.error(r.json())
-        raise
+    # r = s.get('https://api.github.com/user')
+    #
+    # try:
+    #     r.raise_for_status()
+    # except Exception:
+    #     logging.error(r.json())
+    #     raise
 
     return s
 
