@@ -65,7 +65,7 @@ def total_count_commits_from_last_modified(repo_stats, last_modified=None):
 
     total = sum([s.get("total", 0) for s in repo_stats if s.get('week', 0) >= start_of_week])
 
-    return f"{start_of_week}, {total}, {repo_stats}"
+    return start_of_week
 
 
 def get_number_of_pages_repo_list(owner, s, per_page=None, page=None):
