@@ -13,7 +13,7 @@ def _chained_get(dict_, *nested_keys):
 
 def make_session(token=None):
     s = requests.Session()
-    s.headers.update({f"authorization': 'Bearer {token}"})
+    s.headers.update({"authorization": f"Bearer {token}"})
     r = s.get('https://api.github.com/user')
 
     try:
