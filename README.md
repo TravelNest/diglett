@@ -13,7 +13,7 @@ Prints a short summary in the pull request review:
 :white_check_mark: :date: `README.md` was last modified: 2019-04-14T19:55:36Z   
 :white_check_mark: :hash: Since then **5 commits** were pushed   
 >
->:memo: Update your `README.md` to prevent it being outdated! 
+>:memo: Update your `README.md` and keep the repo up to dated!
 
 
 ## Usage
@@ -31,20 +31,17 @@ jobs:
       id: diglett
       uses: TravelNest/diglett@master
       with:
-        USERNAME: ${{ secrets.username }}
-        TOKEN: ${{ secrets.token }}
-        PR_NUMBERS: ${{ github.event.pull_request.number }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
         MAX_COMMITS: 100
         MAX_DAYS: 50
     - name: Diglett result
       run: echo ${{ steps.diglett.outputs.OutputMessage }} 
 ```
 
-Add GitHub credentials `username` and `token` in your repo Secrets.
-
 ## TODO:
- - add tests
- - search for all README.md in repo
- - search for TODOs in code
- - add makefile with tests & lint
+ - [ ] add tests
+ - [x] search for all README.md in repo
+ - [ ] search for TODOs in code
+ - [ ] add makefile with tests & lint
 

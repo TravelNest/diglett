@@ -30,11 +30,10 @@ def main():
     repo_name = env_vars['GITHUB_REPOSITORY'].split('/', 1)[1]
     max_commits = env_vars.get('INPUT_MAX_COMMITS', 100)
     max_days = env_vars.get('INPUT_MAX_DAYS', 50)
-    username = env_vars['INPUT_USERNAME']
     token = env_vars['INPUT_TOKEN']
     pr_number = env_vars['INPUT_PR_NUMBER']
 
-    session = make_session(username, token)
+    session = make_session(token)
 
     if check_if_comment_already_exists(owner, repo_name, pr_number, s=session):
         print(f"::set-output name=OutputMessage:: Diglett already dug this pull request, digging away!")
@@ -42,7 +41,7 @@ def main():
 
     message = f'![diglett](https://raw.githubusercontent.com/TravelNest/diglett/master/diglett.gif) \n' \
         f'Hello hello, \n' \
-        f'I am Diglett and I dig in your documentation! Here is the list of repo `README.mds` \n \n'
+        f'I am Diglett and I dig in your documentation! Here is the list of repo `README.md`s \n \n'
 
     logins = get_organization_user_logins(owner, s=session)
     readme_paths = get_repo_readme_paths(owner, repo_name, session)
@@ -74,7 +73,7 @@ def main():
 
     is_repo_outdated = not all(is_rm_outdated)
     outdated_suffix = f'Your repo documentation is outdated' if is_repo_outdated else \
-        'Update your `README.md` to prevent it being outdated!'
+        'Update your `README.md` and keep the repo up to dated!'
     message += f':memo: {outdated_suffix} \n' \
 
     print(f"::set-output name=OutputMessage:: Is repo outdated? {is_repo_outdated}")

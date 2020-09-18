@@ -11,9 +11,9 @@ def _chained_get(dict_, *nested_keys):
     return dict_
 
 
-def make_session(user=None, token=None):
+def make_session(token=None):
     s = requests.Session()
-    s.auth = (user, token)
+    s.headers.update({f"authorization': 'Bearer {token}"})
     r = s.get('https://api.github.com/user')
 
     try:
@@ -60,24 +60,11 @@ def timedelta_last_modified(last_modified):
     return round((datetime.now() - converted).days)
 
 
-def _convert_date_to_start_of_week(last_modified):
-    converted = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ")
-    # iso = converted.isocalendar()
-    # start_of_week = datetime.strptime(f'{iso[0]} {iso[1] - 2} 0 0', '%Y %W %w %H')
-
-    return round(converted.timestamp())
-
-
 def total_count_commits_from_last_modified(repo_stats, last_modified=None):
-    if not last_modified:
-        return sum([rs.get('total', 0) for rs in repo_stats])
+    if last_modified:
+        start_of_week = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ") if last_modified else 0
 
-    start_of_week = _convert_date_to_start_of_week(last_modified)
-
-    total = 0
-    for stats in repo_stats:
-        if stats.get('week', 0) >= start_of_week:
-            total += stats.get('total', 0)
+    total = sum([s.get("total", 0) for s in repo_stats if s.get('week', 0) >= start_of_week])
 
     return total
 
