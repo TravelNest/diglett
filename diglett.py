@@ -61,11 +61,11 @@ def timedelta_last_modified(last_modified):
 
 
 def total_count_commits_from_last_modified(repo_stats, last_modified=None):
-    start_of_week = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ").timestamp() if last_modified else 0
+    timestamp = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ").timestamp() if last_modified else 0
 
-    total = sum([s.get("total", 0) for s in repo_stats if s.get('week', 0) >= start_of_week])
+    total = sum([s.get("total", 0) for s in repo_stats if s.get('week', 0) >= timestamp])
 
-    return start_of_week
+    return total
 
 
 def get_number_of_pages_repo_list(owner, s, per_page=None, page=None):
