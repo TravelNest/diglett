@@ -43,7 +43,7 @@ def main():
         f'Hello hello, \n' \
         f'I am Diglett and I dig in your documentation! Here is the list of repo `README.md`s \n \n'
 
-    logins = get_organization_user_logins(owner, s=session)
+    # logins = get_organization_user_logins(owner, s=session)
     readme_paths = get_repo_readme_paths(owner, repo_name, session)
 
     repo_stats = get_repo_stats(owner, repo_name, session)
@@ -55,19 +55,19 @@ def main():
         time_delta = timedelta_last_modified(last_modified)
 
         is_over_max_commit_threshold = int(max_commits) < number_of_commits
-        is_author_still_member = author in logins
+        # is_author_still_member = author in logins
         is_over_max_days = int(max_days) < time_delta
 
-        is_rm_outdated.append(not (is_over_max_days or not is_author_still_member or is_over_max_commit_threshold))
+        is_rm_outdated.append(not (is_over_max_days or is_over_max_commit_threshold))
 
-        author_emoji = 'white_check_mark' if is_author_still_member else 'heavy_exclamation_mark'
+        # author_emoji = 'white_check_mark' if is_author_still_member else 'heavy_exclamation_mark'
         commits_emoji = 'heavy_exclamation_mark' if is_over_max_commit_threshold else 'white_check_mark'
         date_emoji = 'heavy_exclamation_mark' if is_over_max_days else 'white_check_mark'
 
-        author_suffix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
+        # author_suffix = f'still member of {owner}' if is_author_still_member else f'**not member of {owner} any more**!'
 
         message += f'`{rm}` \n' \
-            f':{author_emoji}: :bust_in_silhouette: **{author}** last modified the `README.md`, who is {author_suffix}.\n' \
+            f':white_check_mark: :bust_in_silhouette: **{author}** last modified the `README.md`\n' \
             f':{date_emoji}: :date: It was last modified: {datetime_readable(last_modified)} \n' \
             f':{commits_emoji}: :hash: Since then **{number_of_commits} commits** were pushed \n\n' \
 
