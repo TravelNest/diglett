@@ -61,8 +61,7 @@ def timedelta_last_modified(last_modified):
 
 
 def total_count_commits_from_last_modified(repo_stats, last_modified=None):
-    if last_modified:
-        start_of_week = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ") if last_modified else 0
+    start_of_week = datetime.strptime(last_modified, "%Y-%m-%dT%H:%M:%SZ") if last_modified else 0
 
     total = sum([s.get("total", 0) for s in repo_stats if s.get('week', 0) >= start_of_week])
 
